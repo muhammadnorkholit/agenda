@@ -60,7 +60,6 @@ class SiswaController extends Controller
         return response()->json(['data'=>$siswa->with(['kelas'=>function($e){
             $e->with('jurusan');
         }])->get()]);
-
     }
 
     /**

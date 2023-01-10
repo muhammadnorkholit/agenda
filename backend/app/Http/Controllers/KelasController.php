@@ -15,7 +15,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-         return response()->json(['data'=>Kelas::with('Kelas')->get()]);
+         return response()->json(['data'=>Kelas::with('jurusan')->get()]);
     }
 
     /**
@@ -52,9 +52,9 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kelas)
+    public function show($id)
     {
-        return response()->json(['data'=>$kelas]);
+        return response()->json(['data'=>Kelas::with('jurusan')->where('id',$id)->get()]);
     }
 
     /**
@@ -63,9 +63,9 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kelas $kelas)
+     public function edit($id)
     {
-         return response()->json(['data'=>$kelas]);
+        return response()->json(['data'=>Kelas::find($id),'jurusan'=>Jurusan::all()]);
     }
 
     /**
@@ -75,6 +75,7 @@ class KelasController extends Controller
      * @param  \App\Models\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Kelas $kelas)
     {
         Request()->validate([
@@ -83,7 +84,7 @@ class KelasController extends Controller
             'id_jurusan'=>'required'
         ]);
         $kelas->update(Request()->all());
-        return response()->json(['data'=>$Kelas]);
+        return response()->json(['data'=>$kelas]);
     }
 
     /**
